@@ -1,0 +1,212 @@
+#%RAML 1.0
+title: costs
+version: v1
+protocols: [HTTPS]
+baseUri: http://localhost:8090/api/{version}
+mediaType: application/json
+
+types:
+  Day:
+    properties:
+      id: date-only
+      day: 
+        type: number
+        minimum: 1
+        maximum: 31
+      title:
+        type: string
+        pattern: ^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)$
+      isWeekend: boolean
+    example:
+      id: 2017-06-01
+      day: 5
+      title: monday
+      isWeekend: false
+  Month:
+    properties:
+      id: string
+      year: number
+      month: number
+      title: string
+      from: datetime-only
+      until: datetime-only
+      lastDay: 
+        type: number
+        minimum: 28
+        maximum: 31
+      days:
+        type: Day []
+    example:
+      id: 2017-01
+      year: 2017
+      month: 6
+      title: June
+      from: 2017-06-01T00:00:00
+      until: 2017-06-30T23:59:59
+      lastDay: 30
+      days:
+        - # day1
+          id: 2017-06-01
+          day: 1
+          title: thursday
+          isWeekend: false
+        - # day2
+          id: 2017-06-02
+          day: 2
+          title: friday
+          isWeekend: false
+        - # day3
+          id: 2017-06-03
+          day: 3
+          title: saturday
+          isWeekend: true
+        - # day4
+          id: 2017-06-04
+          day: 4
+          title: sunday
+          isWeekend: true
+        - # day5
+          id: 2017-06-05
+          day: 5
+          title: monday
+          isWeekend: false
+        - # day6
+          id: 2017-06-06
+          day: 6
+          title: tuesday
+          isWeekend: false
+        - # day7
+          id: 2017-06-07          
+          day: 7
+          title: wednesday
+          isWeekend: false
+        - # day8
+          id: 2017-06-08
+          day: 8
+          title: thursday
+          isWeekend: false
+        - # day9
+          id: 2017-06-09
+          day: 9
+          title: friday
+          isWeekend: false
+        - # day10
+          id: 2017-06-10
+          day: 10
+          title: saturday
+          isWeekend: true          
+        - # day11
+          id: 2017-06-11
+          day: 11
+          title: sunday
+          isWeekend: true
+        - # day12
+          id: 2017-06-12
+          day: 12
+          title: monday
+          isWeekend: false
+        - # day13
+          id: 2017-06-13
+          day: 13
+          title: tuesday
+          isWeekend: false
+        - # day14
+          id: 2017-06-14
+          day: 14
+          title: wednesday
+          isWeekend: false
+        - # day15
+          id: 2017-06-15
+          day: 15
+          title: thursday
+          isWeekend: false
+        - # day16
+          id: 2017-06-16
+          day: 16
+          title: friday
+          isWeekend: false
+        - # day17
+          id: 2017-06-17
+          day: 17
+          title: saturday
+          isWeekend: true
+        - # day18
+          id: 2017-06-18
+          day: 18
+          title: sunday
+          isWeekend: true
+        - # day19
+          id: 2017-06-19
+          day: 19
+          title: monday
+          isWeekend: false
+        - # day20
+          id: 2017-06-20
+          day: 20
+          title: tuesday
+          isWeekend: false
+        - # day21
+          id: 2017-06-21
+          day: 21
+          title: wednesday
+          isWeekend: false
+        - # day22
+          id: 2017-06-22
+          day: 22
+          title: thursday
+          isWeekend: false
+        - # day23
+          id: 2017-06-23
+          day: 23
+          title: friday
+          isWeekend: false
+        - # day24
+          id: 2017-06-24
+          day: 24
+          title: saturday
+          isWeekend: true
+        - # day25
+          id: 2017-06-25
+          day: 25
+          title: sunday
+          isWeekend: true
+        - # day26
+          id: 2017-06-26
+          day: 26
+          title: monday
+          isWeekend: false
+        - # day27
+          id: 2017-06-27
+          day: 27
+          title: tuesday
+          isWeekend: false
+        - # day28
+          id: 2017-06-28
+          day: 28
+          title: wednesday
+          isWeekend: false
+        - # day29
+          id: 2017-06-29
+          day: 29
+          title: thursday
+          isWeekend: false
+        - # day30
+          id: 2017-06-30
+          day: 30
+          title: friday
+          isWeekend: false
+  Year:
+    type: Month []
+resourceTypes:
+  Collection:
+        get:
+          responses:
+            200:
+              body: 
+                application/json:
+                  type: <<item>>
+/calendar:
+  /{year}:
+    type: {Collection: {item : Year}}
+  /{year}/{month}:
+    type: {Collection: {item: Month}}
